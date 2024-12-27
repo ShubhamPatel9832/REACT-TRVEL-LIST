@@ -6,22 +6,22 @@ import ItemList from "./components/ItemList";
 import "./index.css";
 
 const appStyle = {
-  height: "100vh",
-  display: "grid",
-  gridTemplateColumns: "1fr",
-  gridTemplateRows: "3rem 2rem  1fr  1rem",
+    height: "100vh",
+    display: "grid",
+    gridTemplateColumns: "1fr",
+    gridTemplateRows: "7rem 5rem  1fr  1rem",
 };
 
 function App() {
-  return (
-    <div style={appStyle}>
-      <Header />
-      <Additem />
-      <ItemList />
-      {/* <Filter /> */}
-      <Footer />
-    </div>
-  );
+    return (
+        <div style={appStyle}>
+            <Header />
+            <Additem />
+            <ItemList />
+            {/* <Filter /> */}
+            <Footer />
+        </div>
+    );
 }
 
 export default App;
