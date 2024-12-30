@@ -1,9 +1,11 @@
 import style from "../styles/Footer.module.css";
 
-function Footer() {
+function Footer(prop) {
+    const { totalItems, packedItem, packedPersentage } = prop;
     return (
         <div className={style.footer}>
-            you have 3 item left on your list and you have alredy
+            you have {totalItems} item left on your list and you have alredy
+            packed {packedItem} ({packedPersentage}%)
         </div>
     );
 }

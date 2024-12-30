@@ -21,3 +21,8 @@
     border: none;
     outline: none;
 }
+
+.packed {
+    text-decoration: line-through;
+    color: green;
+}

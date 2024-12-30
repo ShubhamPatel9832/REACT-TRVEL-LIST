@@ -15,10 +15,41 @@ const appStyle = {
     gridTemplateRows: "7rem 5rem 1fr 4rem auto",
 };
 
+function sortItemsArr(itemsArr, sort) {
+    if (sort === "input-order") {
+        return itemsArr;
+    }
+
+    if (sort === "description") {
+        itemsArr.sort(function (item1, item2) {
+            return item1.name.localeCompare(item2.name);
+        });
+        return itemsArr;
+    }
+
+    if (sort === "status") {
+        itemsArr.sort(function (item1, item2) {
+            if (item1.packed === item2.packed) return 0;
+            if (item1.packed === true && item2.packed === false) return 1;
+            if (item1.packed === false && item2.packed === true) return -1;
+        });
+        return itemsArr;
+    }
+}
+
 function App() {
     const [items, setItems] = useState({});
+    const [sort, setSort] = useState("input-order");
+    // drived
+    const itemsArr = sortItemsArr(Object.values(items), sort);
 
-    let itemsArr = Object.values(items);
+    const totalItems = itemsArr.length;
+    const packedItem = itemsArr.reduce(function (acc, item) {
+        if (item.packed) acc++;
+        return acc;
+    }, 0);
+
+    const packedPersentage = ((packedItem / totalItems) * 100).toFixed(2);
 
     function addItem(item) {
         setItems(function (items) {
@@ -44,26 +75,12 @@ function App() {
         });
     }
 
-    // function filterItems(type) {
-    //     if (type === "input-order") {
-    //         itemsArr = Object.values(items);
-    //     }
-    //     if (type === "description") {
-    //         itemsArr.sort(function (item1, item2) {
-    //             return item1.name.localCompare(item2.name);
-    //         });
-    //     }
-    //     if (type === "status") {
-    //         itemsArr.sort(function (item1, item2) {
-    //             if (item1.packed === item2.packed) return 0;
-    //             if (item1.packed === true && item2.packed === false) return -1;
-    //             if (item1.packed === false && item2.packed === true) return 1;
-    //         });
-    //     }
-    // }
-
     function clearList() {
         setItems({});
+    }
+
+    function filterItems(sortValue) {
+        setSort(sortValue);
     }
 
     // prop -drilling
@@ -77,11 +94,15 @@ function App() {
             <ItemList
                 deleteItem={deleteItem}
                 updateItem={updateItem}
-                items={Object.values(items)}
+                items={itemsArr}
             />
-            <Filter clearList={clearList} />
+            <Filter clearList={clearList} filterItems={filterItems} />
 
-            <Footer />
+            <Footer
+                totalItems={totalItems}
+                packedItem={packedItem}
+                packedPersentage={packedPersentage}
+            />
         </div>
     );
 }
