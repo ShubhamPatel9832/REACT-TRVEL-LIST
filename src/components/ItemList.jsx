@@ -2,7 +2,7 @@ import style from "../styles/ItemList.module.css";
 import Item from "./Item";
 
 function ItemList(props) {
-    const { items } = props;
+    const { items, updateItem, deleteItem, c } = props;
 
     return (
         <div className={style.itemList}>
@@ -13,6 +13,8 @@ function ItemList(props) {
                         count={item.count}
                         packed={item.packed}
                         key={index}
+                        updateItem={updateItem}
+                        deleteItem={deleteItem}
                     />
                 );
             })}
